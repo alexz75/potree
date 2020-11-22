@@ -58,13 +58,16 @@
 		});
 		
 		// Load and add point cloud to scene
-		Potree.loadPointCloud("../pointclouds/vol_total/cloud.js", "sigeom.sa", e => {
+		Potree.XHRFactory.config.sasToken = "***"
+		Potree.loadPointCloud("https://xxx.blob.core.windows.net/potree2/index/cloud.js", "sigeom.sa", e => {
 			let scene = viewer.scene;
 			let pointcloud = e.pointcloud;
 			
 			let material = pointcloud.material;
 			material.size = 1;
-			material.pointSizeType = Potree.PointSizeType.ADAPTIVE;
+			material.pointColorType = Potree.PointColorType.HEIGHT; // any Potree.PointColorType.XXXX
+			material.gradient = Potree.Gradients.PLASMA;
+			material.pointSizeType = Potree.PointSizeType.FIXED;
 			material.shape = Potree.PointShape.SQUARE;
 			
 			scene.addPointCloud(pointcloud);
